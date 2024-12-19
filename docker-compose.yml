@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+  app:
+    image: govindgojiya/240216govindstreamlitpy
+    ports:
+      - 8501:8501
+    depends_on:
+      - mysqldb
+    networks:
+      - data_profiler_network
+    environment:
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: data_profiler_2929
+      MYSQL_DB: profiler
+
+  mysqldb:
+    image: mysql
+    volumes:
+      - data-profiler-app:/var/lib/mysql
+    networks:
+      - data_profiler_network
+    environment:
+      MYSQL_ROOT_PASSWORD: data_profiler_2929
+      MYSQL_DATABASE: profiler
+
+volumes:
+  data-profiler-app:
+
+networks:
+  data_profiler_network:
+    driver: bridge
